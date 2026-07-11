@@ -22,5 +22,7 @@ RESUME_PATH = Path(
     "C:\\Users\\reddy\\naukariUpdate\\Naveen_python_developer.pdf"
 ).resolve()
 
+api_key = os.getenv("OPENAI_API_KEY", "")
+print(f"Loaded OPENAI_API_KEY: {api_key[:4]}...")
 HEADLESS = False
 WAIT_TIME = 15

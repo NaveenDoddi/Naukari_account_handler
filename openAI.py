@@ -1,7 +1,8 @@
 from openai import OpenAI
 import json
+import config
 
-client = OpenAI(api_key="YOUR_API_KEY")
+client = OpenAI(api_key=config.api_key)
 
 with open("profile.json") as f:
     profile = json.load(f)
