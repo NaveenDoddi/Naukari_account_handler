@@ -1,0 +1,82 @@
+{
+    "personal": {
+        "name": "Naveen Doddi",
+        "email": "naveeendoddi@gmail.com",
+        "phone": "8555913494",
+        "location": "Bengaluru",
+        "preferred_locations": [
+            "Bengaluru",
+            "Hyderabad",
+            "Chennai",
+            "Pune",
+            "Remote"
+        ],
+        "notice_period_days": 30,
+        "work_experience_years": 2,
+        "highest_qualification": "B.Tech Information Technology",
+        "graduation_year": 2024
+    },
+    "salary": {
+        "current_ctc": 6,
+        "expected_ctc": 12,
+        "currency": "LPA"
+    },
+    "experience": {
+        "python": 2,
+        "selenium": 2,
+        "pytest": 2,
+        "automation": 2,
+        "git": 2,
+        "gitlab": 2,
+        "ci_cd": 2,
+        "docker": 1,
+        "linux": 2,
+        "rest_api": 2,
+        "aws": 1,
+        "kubernetes": 1,
+        "fastapi": 1,
+        "flask": 1,
+        "django": 0,
+        "langchain": 1,
+        "openai": 1,
+        "rag": 1,
+        "numpy": 1,
+        "pandas": 1,
+        "mongodb": 2,
+        "mysql": 2
+    },
+    "skills": [
+        "Python",
+        "Selenium",
+        "Pytest",
+        "FastAPI",
+        "Flask",
+        "Docker",
+        "Git",
+        "GitLab CI/CD",
+        "REST API",
+        "LangChain",
+        "OpenAI",
+        "Linux",
+        "AWS",
+        "MongoDB",
+        "MySQL",
+        "Pandas",
+        "NumPy"
+    ],
+    "frameworks": [
+        "FastAPI",
+        "Flask"
+    ],
+    "languages": {
+        "English": "Professional",
+        "Telugu": "Native",
+        "Hindi": "Basic"
+    },
+    "preferences": {
+        "relocate": true,
+        "night_shift": true,
+        "weekend_support": true,
+        "work_from_office": true
+    }
+}

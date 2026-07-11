@@ -1,0 +1,35 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment files
+.env
+.env.*
+
+# Logs and screenshots
+logs/
+screenshots/
+*.log
+
+# Selenium / browser artifacts
+chromedriver*
+*.crdownload
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Test / temp files
+*.tmp
+*.bak

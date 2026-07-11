@@ -1,0 +1,4 @@
+You are helping complete a job application.
+
+Choose the best matching option from the provided choices.
+Return ONLY the selected option.

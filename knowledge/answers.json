@@ -1,0 +1,57 @@
+{
+    "answers": [
+        {
+            "id": "cloud",
+            "keywords": [
+                "cloud",
+                "aws",
+                "azure",
+                "gcp",
+                "cloud platform"
+            ],
+            "type": "experience",
+            "field": "experience.aws"
+        },
+        {
+            "id": "python_frameworks",
+            "keywords": [
+                "backend framework",
+                "python framework",
+                "frameworks"
+            ],
+            "type": "multi_select",
+            "answer": [
+                "FastAPI",
+                "Flask"
+            ]
+        },
+        {
+            "id": "notice",
+            "keywords": [
+                "notice period",
+                "joining"
+            ],
+            "type": "profile",
+            "field": "personal.notice_period_days"
+        },
+        {
+            "id": "current_ctc",
+            "keywords": [
+                "current ctc",
+                "current salary",
+                "present ctc"
+            ],
+            "type": "salary",
+            "field": "salary.current_ctc"
+        },
+        {
+            "id": "expected_ctc",
+            "keywords": [
+                "expected ctc",
+                "salary expectation"
+            ],
+            "type": "salary",
+            "field": "salary.expected_ctc"
+        }
+    ]
+}
