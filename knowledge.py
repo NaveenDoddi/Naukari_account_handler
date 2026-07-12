@@ -2,18 +2,48 @@ import json
 from pathlib import Path
 from typing import Any
 
+from logger import logger
+
 BASE_DIR = Path(__file__).resolve().parent
 KNOWLEDGE_DIR = BASE_DIR / "knowledge"
 QA_DATABASE_PATH = KNOWLEDGE_DIR / "qa_database.json"
 PROFILE_PATH = KNOWLEDGE_DIR / "profile.json"
 HISTORY_PATH = KNOWLEDGE_DIR / "history.json"
+MISSING_QUESTIONS_PATH = BASE_DIR / "missing_questions.txt"
 
 
 def _load_json(path: Path) -> Any:
     if not path.exists():
         return [] if path.suffix == ".json" else {}
-    with path.open("r", encoding="utf-8") as handle:
-        return json.load(handle)
+
+    text = path.read_text(encoding="utf-8")
+    if not text or not text.strip():
+        return [] if path.suffix == ".json" else {}
+
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        if path.suffix == ".json":
+            decoder = json.JSONDecoder()
+            try:
+                obj, idx = decoder.raw_decode(text)
+            except json.JSONDecodeError:
+                backup_path = path.with_suffix(path.suffix + ".bak")
+                path.replace(backup_path)
+                return []
+
+            remainder = text[idx:].strip()
+            if remainder:
+                backup_path = path.with_suffix(path.suffix + ".bak")
+                path.replace(backup_path)
+                with path.open("w", encoding="utf-8") as handle:
+                    json.dump(obj, handle, indent=2)
+
+            return obj if isinstance(obj, (list, dict)) else []
+
+        backup_path = path.with_suffix(path.suffix + ".bak")
+        path.replace(backup_path)
+        return [] if path.suffix == ".json" else {}
 
 
 QA_DATABASE = _load_json(QA_DATABASE_PATH)
@@ -62,7 +92,7 @@ def get_answer(question: str):
 
 
 def save_missing_question(question: str):
-    with HISTORY_PATH.open("a", encoding="utf-8") as handle:
+    with MISSING_QUESTIONS_PATH.open("a", encoding="utf-8") as handle:
         handle.write(question + "\n")
 
 

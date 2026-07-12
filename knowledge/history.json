@@ -1,4 +1,78 @@
-Hi Doddi Naveen, thank you for showing interest. Kindly answer all the recruiter's questions to successfully apply for the job.
-Hi Doddi Naveen, thank you for showing interest. Kindly answer all the recruiter's questions to successfully apply for the job.
-How many years of experience do you have in Testing Tools?
-How many years of experience do you have in Testing Tools?
+[
+  {
+    "question": "How many years of experience do you have in Testing Tools?",
+    "answer": "2"
+  },
+  {
+    "question": "How many years of experience do you have in Automation Testing?",
+    "answer": "2"
+  },
+  {
+    "question": "How many years of experience do you have in Rest Assured?",
+    "answer": "0"
+  },
+  {
+    "question": "How many years of experience do you have in Java Selenium?",
+    "answer": "0"
+  },
+  {
+    "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
+    "answer": "Yes"
+  },
+  {
+    "question": "Are you currently living in or ready to relocate to Bengaluru ?",
+    "answer": "Yes"
+  },
+  {
+    "question": "How many years of experience do you have in C++ ?",
+    "answer": "0"
+  },
+  {
+    "question": "How many years of experience do you have in C++ ?",
+    "answer": "No experience"
+  },
+  {
+    "question": "How many years of experience do you have as Software Engineer ?",
+    "answer": "1-3 years"
+  },
+  {
+    "question": "How many years of experience you have in DevOps?",
+    "answer": "2"
+  },
+  {
+    "question": "Please mention your years of experience in Docker & Kubernetes , Helm , Gitops, ArgoCD and MongoDB",
+    "answer": "Docker: 1 year, Kubernetes: 1 year, Helm: 0 years, Gitops: 0 years, ArgoCD: 0 years, MongoDB: 2 years"
+  },
+  {
+    "question": "How many years of Hands-on experience you have in AWS/Azure?",
+    "answer": "1"
+  },
+  {
+    "question": "What is your current location?",
+    "answer": "Bengaluru"
+  },
+  {
+    "question": "What is your preferred location?",
+    "answer": "Bangalore"
+  },
+  {
+    "question": "What is your official notice period? If you are serving notice or completed, please mention your last working day.",
+    "answer": "30 days"
+  },
+  {
+    "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
+    "answer": "Yes"
+  },
+  {
+    "question": "Are you currently residing in Chennai or willing to relocate to Chennai?",
+    "answer": "Yes"
+  },
+  {
+    "question": "Are you open to work from office all 5 days?",
+    "answer": "yes"
+  },
+  {
+    "question": "How many years of industrial experience you have with any cloud platform (AWS, GCP, Azure)?",
+    "answer": "Yes"
+  }
+]

@@ -22,7 +22,8 @@ RESUME_PATH = Path(
     "C:\\Users\\reddy\\naukariUpdate\\Naveen_python_developer.pdf"
 ).resolve()
 
-api_key = os.getenv("OPENAI_API_KEY", "")
-print(f"Loaded OPENAI_API_KEY: {api_key[:4]}...")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+# print(f"Loaded GEMINI_API_KEY: {GEMINI_API_KEY[:4]}...")
 HEADLESS = False
-WAIT_TIME = 15
+WAIT_TIME = 10

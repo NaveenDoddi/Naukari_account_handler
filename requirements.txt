@@ -1,4 +1,4 @@
 selenium
 webdriver-manager
 schedule
-openai
+google-genai
