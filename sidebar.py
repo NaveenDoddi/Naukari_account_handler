@@ -1,4 +1,5 @@
 import time
+import re
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -50,6 +51,27 @@ def sidebar_visible(driver):
         len(driver.find_elements(By.CSS_SELECTOR, "div.chatbot_DrawerContentWrapper"))
         > 0
     )
+
+
+def _normalize_choice(text):
+    """Normalize option text to a canonical numeric range when possible.
+
+    Examples:
+    - '2-4 years' -> '2-4'
+    - '2 to 4' -> '2-4'
+    - '3' -> '3'
+    If no digits are present, returns lowercase stripped text.
+    """
+    if not text:
+        return ""
+
+    nums = re.findall(r"\d+", text)
+    if len(nums) >= 2:
+        return f"{nums[0]}-{nums[1]}"
+    if len(nums) == 1:
+        return nums[0]
+
+    return text.strip().lower()
 
 
 def get_question(driver):
@@ -306,17 +328,59 @@ def answer_sidebar(driver, wait):
             for value in answer:
                 logger.info(f"Selecting checkbox : {value}")
 
-                checkbox = wait.until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, f"//label[normalize-space()='{value}']")
+                checkbox = None
+
+                # Try exact-match XPath first (fastest)
+                try:
+                    checkbox = wait.until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH, f"//label[normalize-space()='{value}']")
+                        )
                     )
-                )
+                except Exception:
+                    # Fallback: scan all labels and match text more leniently
+                    labels = driver.find_elements(By.TAG_NAME, "label")
+                    for lab in labels:
+                        try:
+                            text = lab.text.strip()
+                        except Exception:
+                            continue
+
+                        if not text:
+                            continue
+
+                        # Normalize numeric ranges (e.g. '2-4 years' -> '2-4')
+                        lab_norm = _normalize_choice(text)
+                        val_norm = _normalize_choice(value)
+
+                        if (
+                            text == value
+                            or text.lower() == value.lower()
+                            or value.lower() in text.lower()
+                            or lab_norm == val_norm
+                            or lab_norm in val_norm
+                            or val_norm in lab_norm
+                        ):
+                            checkbox = lab
+                            break
+
+                if checkbox is None:
+                    logger.warning(f"Could not find checkbox for value: {value}")
+                    continue
+
+                # If label contains an <input>, prefer clicking the input element
+                try:
+                    input_el = checkbox.find_element(By.TAG_NAME, "input")
+                except Exception:
+                    input_el = None
+
+                target = input_el if input_el is not None else checkbox
 
                 driver.execute_script(
-                    "arguments[0].scrollIntoView({block:'center'});", checkbox
+                    "arguments[0].scrollIntoView({block:'center'});", target
                 )
 
-                safe_click(driver, checkbox)
+                safe_click(driver, target)
 
         # ===========================
         # RADIO BUTTON
@@ -324,17 +388,54 @@ def answer_sidebar(driver, wait):
         elif question_type == "radio":
             logger.info(f"Selecting radio : {answer}")
 
-            radio = wait.until(
-                EC.element_to_be_clickable(
-                    (By.XPATH, f"//label[normalize-space()='{answer}']")
+            radio = None
+
+            try:
+                radio = wait.until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH, f"//label[normalize-space()='{answer}']")
+                    )
                 )
-            )
+            except Exception:
+                labels = driver.find_elements(By.TAG_NAME, "label")
+                for lab in labels:
+                    try:
+                        text = lab.text.strip()
+                    except Exception:
+                        continue
 
-            driver.execute_script(
-                "arguments[0].scrollIntoView({block:'center'});", radio
-            )
+                    if not text:
+                        continue
 
-            safe_click(driver, radio)
+                    lab_norm = _normalize_choice(text)
+                    ans_norm = _normalize_choice(answer)
+
+                    if (
+                        text == answer
+                        or text.lower() == answer.lower()
+                        or answer.lower() in text.lower()
+                        or lab_norm == ans_norm
+                        or lab_norm in ans_norm
+                        or ans_norm in lab_norm
+                    ):
+                        radio = lab
+                        break
+
+            if radio is None:
+                logger.warning(f"Could not find radio option for value: {answer}")
+            else:
+                try:
+                    input_el = radio.find_element(By.TAG_NAME, "input")
+                except Exception:
+                    input_el = None
+
+                target = input_el if input_el is not None else radio
+
+                driver.execute_script(
+                    "arguments[0].scrollIntoView({block:'center'});", target
+                )
+
+                safe_click(driver, target)
 
         # ===========================
         # DROPDOWN

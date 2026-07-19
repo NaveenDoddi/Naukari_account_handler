@@ -32,6 +32,7 @@ def main():
     finally:
         # if driver:
         #     driver.quit()
+        time.sleep(50)
         logger.info("========== Automation Finished ==========")
 
 
