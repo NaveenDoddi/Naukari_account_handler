@@ -1,78 +1,458 @@
 [
-  {
-    "question": "How many years of experience do you have in Testing Tools?",
-    "answer": "2"
-  },
-  {
-    "question": "How many years of experience do you have in Automation Testing?",
-    "answer": "2"
-  },
-  {
-    "question": "How many years of experience do you have in Rest Assured?",
-    "answer": "0"
-  },
-  {
-    "question": "How many years of experience do you have in Java Selenium?",
-    "answer": "0"
-  },
-  {
-    "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
-    "answer": "Yes"
-  },
-  {
-    "question": "Are you currently living in or ready to relocate to Bengaluru ?",
-    "answer": "Yes"
-  },
-  {
-    "question": "How many years of experience do you have in C++ ?",
-    "answer": "0"
-  },
-  {
-    "question": "How many years of experience do you have in C++ ?",
-    "answer": "No experience"
-  },
-  {
-    "question": "How many years of experience do you have as Software Engineer ?",
-    "answer": "1-3 years"
-  },
-  {
-    "question": "How many years of experience you have in DevOps?",
-    "answer": "2"
-  },
-  {
-    "question": "Please mention your years of experience in Docker & Kubernetes , Helm , Gitops, ArgoCD and MongoDB",
-    "answer": "Docker: 1 year, Kubernetes: 1 year, Helm: 0 years, Gitops: 0 years, ArgoCD: 0 years, MongoDB: 2 years"
-  },
-  {
-    "question": "How many years of Hands-on experience you have in AWS/Azure?",
-    "answer": "1"
-  },
-  {
-    "question": "What is your current location?",
-    "answer": "Bengaluru"
-  },
-  {
-    "question": "What is your preferred location?",
-    "answer": "Bangalore"
-  },
-  {
-    "question": "What is your official notice period? If you are serving notice or completed, please mention your last working day.",
-    "answer": "30 days"
-  },
-  {
-    "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
-    "answer": "Yes"
-  },
-  {
-    "question": "Are you currently residing in Chennai or willing to relocate to Chennai?",
-    "answer": "Yes"
-  },
-  {
-    "question": "Are you open to work from office all 5 days?",
-    "answer": "yes"
-  },
-  {
-    "question": "How many years of industrial experience you have with any cloud platform (AWS, GCP, Azure)?",
-    "answer": "Yes"
-  }
+    {
+        "question": "How many years of experience do you have in Testing Tools?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Automation Testing?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Rest Assured?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Java Selenium?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you currently living in or ready to relocate to Bengaluru ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in C++ ?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in C++ ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have as Software Engineer ?",
+        "answer": "1-3 years"
+    },
+    {
+        "question": "How many years of experience you have in DevOps?",
+        "answer": "2"
+    },
+    {
+        "question": "Please mention your years of experience in Docker & Kubernetes , Helm , Gitops, ArgoCD and MongoDB",
+        "answer": "Docker: 1 year, Kubernetes: 1 year, Helm: 0 years, Gitops: 0 years, ArgoCD: 0 years, MongoDB: 2 years"
+    },
+    {
+        "question": "How many years of Hands-on experience you have in AWS/Azure?",
+        "answer": "1"
+    },
+    {
+        "question": "What is your current location?",
+        "answer": "Bengaluru"
+    },
+    {
+        "question": "What is your preferred location?",
+        "answer": "Bangalore"
+    },
+    {
+        "question": "What is your official notice period? If you are serving notice or completed, please mention your last working day.",
+        "answer": "30 days"
+    },
+    {
+        "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you currently residing in Chennai or willing to relocate to Chennai?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you open to work from office all 5 days?",
+        "answer": "yes"
+    },
+    {
+        "question": "How many years of industrial experience you have with any cloud platform (AWS, GCP, Azure)?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you currently residing in Bengaluru or willing to relocate to Bengaluru?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in ORMS?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in Full Stack ?",
+        "answer": "1-2 years"
+    },
+    {
+        "question": "How many years of experience do you have as Fullstack Software Developer ?",
+        "answer": "1-2 years"
+    },
+    {
+        "question": "Are you available for F2F interview on 16 or 17 Jul ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you a Previous Employee, Intern, Or Contractor?",
+        "answer": "No"
+    },
+    {
+        "question": "Do you have any first degree/blood relatives working at NICE?",
+        "answer": "No"
+    },
+    {
+        "question": "Do You Have A Relative Working In NICE?",
+        "answer": "No"
+    },
+    {
+        "question": "Do you hold any other offers?",
+        "answer": "No"
+    },
+    {
+        "question": "Open To Relocation",
+        "answer": "Yes"
+    },
+    {
+        "question": "Open To Relocation",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you currently living in or ready to relocate to Bengaluru ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Java ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in J2Ee ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "Are you open for contractual role for 7 Years?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you open for 5 days onsite job?",
+        "answer": "Yes"
+    },
+    {
+        "question": "What is the last working date?",
+        "answer": "30 days"
+    },
+    {
+        "question": "How much can you rate your DSA coding (out f 10)?",
+        "answer": "7/10"
+    },
+    {
+        "question": "Are you available for Face to Face Discussion on 18th July 2026 (Saturday) in Bangalore ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Do you have hands-on experience developing production-grade applications using Python?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Have you designed, developed, or operated microservices-based applications using Kubernetes and containers?",
+        "answer": "yes"
+    },
+    {
+        "question": "Do you have experience building and supporting cloud-native distributed systems on AWS, Azure, or GCP?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Highest Level of Education Obtained",
+        "answer": "Bachelors Degree"
+    },
+    {
+        "question": "Do you identify as a military spouse?",
+        "answer": "I am not a military spouse or partner"
+    },
+    {
+        "question": "Have you been previously or are currently associated with NetApp?",
+        "answer": "No - Never associated with NetApp"
+    },
+    {
+        "question": "Will you now or in the future require sponsorship for employment (e.g. H-1B visa status)?",
+        "answer": "No"
+    },
+    {
+        "question": "Will you now or in the future require sponsorship for employment (e.g. H-1B visa status)?",
+        "answer": "No"
+    },
+    {
+        "question": "Have you previously been employed by or received an offer from Flexera?",
+        "answer": "No"
+    },
+    {
+        "question": "What is your current CTC and expected ctc?",
+        "answer": "Current CTC: 6 LPA, Expected CTC: 12 LPA"
+    },
+    {
+        "question": "How many years of experience do you have in Java Backend?",
+        "answer": "0"
+    },
+    {
+        "question": "Which cloud you are having exp in?",
+        "answer": "AWS"
+    },
+    {
+        "question": "How many exp do you have in Ci/Cd?",
+        "answer": "2 years"
+    },
+    {
+        "question": "How many years of working exp with networking protocols?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently residing in Bengaluru?",
+        "answer": "Yes"
+    },
+    {
+        "question": "this is 1 year contract role with hybrid mode. Are you fine?",
+        "answer": "Yes"
+    },
+    {
+        "question": "2 round is f2f. are you fine?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in OOPS?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Backend Development?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Java?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Spring Boot?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Postgresql?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Dropwizard?",
+        "answer": "0"
+    },
+    {
+        "question": "What is your notice period?",
+        "answer": "1 Month"
+    },
+    {
+        "question": "Are you currently living in or ready to relocate to Chennai ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Fullstack Development?",
+        "answer": "1-2 years"
+    },
+    {
+        "question": "How many years of experience do you have in Java development?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in \"Spring Boot\" ?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in DSA?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in microservices?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in cloud ?",
+        "answer": "1"
+    },
+    {
+        "question": "Are you holding any counter offer ?",
+        "answer": "No"
+    },
+    {
+        "question": "For a faster response, please follow up on WhatsApp",
+        "answer": "8555913494"
+    },
+    {
+        "question": "Date Of Birth",
+        "answer": "12/06/2003"
+    },
+    {
+        "question": "Which backend languages have you used in production?",
+        "answer": "Python"
+    },
+    {
+        "question": "Have you designed and maintained backend services or REST APIs in a production environment?",
+        "answer": "Yes"
+    },
+    {
+        "question": "What best describes your experience with distributed systems (microservices, message queues, event-driven architectures)?",
+        "answer": "I have 2 years of experience developing microservices using FastAPI and Flask, containerizing applications with Docker, and managing deployments with Kubernetes on AWS."
+    },
+    {
+        "question": "Have you been responsible for operating services in production (monitoring, on-call, incident handling, troubleshooting)?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Which observability practices have you worked with?",
+        "answer": "Application logging, container monitoring with Docker and Kubernetes, and cloud monitoring using AWS CloudWatch."
+    },
+    {
+        "question": "Which relational databases have you worked with?",
+        "answer": "MySQL"
+    },
+    {
+        "question": "Have you worked with CI/CD pipelines, containers (Docker), or cloud infrastructure?",
+        "answer": "Yes, I have 2 years of experience working with GitLab CI/CD pipelines, 1 year of experience with Docker containers, and 1 year of experience with AWS cloud infrastructure."
+    },
+    {
+        "question": "How many years of experience do you have in Vision Pro?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Image Processing?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Opencv?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Computer Vision?",
+        "answer": "0"
+    },
+    {
+        "question": "Did you have experience in Python or Dotnet?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in React Native?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Redux?",
+        "answer": "0"
+    },
+    {
+        "question": "Kindly fill this form as mandatory to get updates (Form link: https://forms.gle/4dtXdFDopbtLG3Ac8)",
+        "answer": "Yes - Filles"
+    },
+    {
+        "question": "How many years of experience do you have in Java Spring Boot?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Generative Ai?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in SQL Scripting?",
+        "answer": "2"
+    },
+    {
+        "question": "Are you intrested towards Night Shift ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Mobile Application Testing?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Mobile Testing?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently residing in Hyderabad or willing to relocate to Hyderabad?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of work experience do you have with React.js?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you an immediate joiner ? If not, please specify your official notice period and remaining days, if serving.",
+        "answer": "No, my official notice period is 30 days."
+    },
+    {
+        "question": "How would you rate yourself on a scale of 1 to 10 in Data Structures and Algorithms?",
+        "answer": "8"
+    },
+    {
+        "question": "What is your experience with thresholding & cost-sensitive decisioning in fraud?",
+        "answer": "Beginner: Uses default threshold; optimizes generic metrics (accuracy/ROC-AUC)."
+    },
+    {
+        "question": "How do you handle severe class imbalance and evaluate models?",
+        "answer": "Beginner: Uses class weights; reports ROC-AUC and F1 only."
+    },
+    {
+        "question": "Describe your feature engineering for payments fraud.",
+        "answer": "Beginner: Basic aggregates (counts, sums) over fixed windows."
+    },
+    {
+        "question": "What is your approach to time-based validation and leakage prevention?",
+        "answer": "Intermediate: Time-series/rolling CV; excludes post-auth features; leakage checks."
+    },
+    {
+        "question": "What s your experience deploying and operating fraud models in real-time?",
+        "answer": "Beginner: Batch scoring; basic REST inference."
+    },
+    {
+        "question": "How do you monitor drift and maintain calibration post-deployment?",
+        "answer": "Beginner: Periodic re-train; tracks overall accuracy."
+    },
+    {
+        "question": "As per NPCI hiring policies and unbiased hiring, are you comfortable to perform HackerRank Technical Test?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Electric Vehicle?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Cloud Data Flow?",
+        "answer": "1"
+    },
+    {
+        "question": "Are you willing to relocate?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in RAG ?",
+        "answer": "<2 years"
+    },
+    {
+        "question": "How many years of experience do you have in LLM ?",
+        "answer": "<2 years"
+    },
+    {
+        "question": "How many years of experience do you have in Python ?",
+        "answer": "2-4 years"
+    },
+    {
+        "question": "How many years of experience do you have in Frappe Framework?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently living in or ready to relocate to Hyderabad ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Agentic Ai ?",
+        "answer": "<2 years"
+    },
+    {
+        "question": "How many years of experience do you have as Forward Deployed Software Engineer ?",
+        "answer": "1-3 years"
+    }
 ]

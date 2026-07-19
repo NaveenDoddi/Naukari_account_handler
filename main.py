@@ -25,10 +25,8 @@ def main():
         # else:
         #     logger.info("User already logged in. Continuing to recommended jobs...")
 
-        while True:
-            apply_jobs(driver, wait)
-            logger.info("Waiting 10 seconds before retrying recommended jobs...")
-            time.sleep(10)
+        apply_jobs(driver, wait)
+        logger.info("Automation run completed.")
     except Exception as exc:
         logger.exception("Automation failed: %s", exc)
     finally:

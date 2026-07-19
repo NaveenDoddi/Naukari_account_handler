@@ -151,7 +151,18 @@ def click_save(driver, wait):
     return False
 
 
-def detect_question_type(driver):
+def is_dob_question(question):
+    if not question:
+        return False
+
+    normalized = question.lower().replace("?", "").strip()
+    return any(
+        keyword in normalized
+        for keyword in ["date of birth", "dob", "birth date", "birthday"]
+    )
+
+
+def detect_question_type(driver, question=None):
 
     # Multi Checkbox
     if driver.find_elements(By.CSS_SELECTOR, "div.multiselectcheckboxes"):
@@ -165,41 +176,108 @@ def detect_question_type(driver):
     if driver.find_elements(By.TAG_NAME, "select"):
         return "dropdown"
 
-    # Visible Textbox
-    textboxes = driver.find_elements(
-        By.CSS_SELECTOR, "div.textArea[contenteditable='true']"
-    )
+    # Custom DOB widget
+    if is_dob_question(question) or driver.find_elements(
+        By.CSS_SELECTOR, "input[name='day'], input[name='month'], input[name='year']"
+    ):
+        return "dob"
 
-    for tb in textboxes:
-        if tb.is_displayed():
-            return "text"
+    # Visible Textbox / input fields
+    text_selectors = [
+        "div.textArea[contenteditable='true']",
+        "textarea",
+        "input[type='text']",
+        "input[type='date']",
+        "input[type='email']",
+        "input:not([type])",
+    ]
+
+    for selector in text_selectors:
+        for element in driver.find_elements(By.CSS_SELECTOR, selector):
+            if element.is_displayed() and element.is_enabled():
+                return "text"
 
     return "unknown"
+
+
+def fill_text_answer(driver, element, answer):
+    element.click()
+
+    try:
+        element.clear()
+    except Exception:
+        try:
+            driver.execute_script("arguments[0].innerText = '';", element)
+        except Exception:
+            pass
+
+    element.send_keys(str(answer))
+
+
+def fill_dob_answer(driver, wait, answer):
+    try:
+        parts = []
+        for token in str(answer).replace("-", "/").split("/"):
+            token = token.strip()
+            if token:
+                parts.append(token)
+
+        if len(parts) != 3:
+            raise ValueError("Answer was not in DD/MM/YYYY format")
+
+        day, month, year = parts[0], parts[1], parts[2]
+
+        field_map = {
+            "day": wait.until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, "input[name='day']"))
+            ),
+            "month": wait.until(
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, "input[name='month']")
+                )
+            ),
+            "year": wait.until(
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, "input[name='year']")
+                )
+            ),
+        }
+
+        for key, value in [("day", day), ("month", month), ("year", year)]:
+            element = field_map[key]
+            driver.execute_script(
+                "arguments[0].scrollIntoView({block:'center'});", element
+            )
+            element.clear()
+            element.send_keys(str(value))
+
+        return True
+    except Exception as exc:
+        logger.warning(f"Could not fill DOB fields: {exc}")
+        return False
 
 
 def answer_sidebar(driver, wait):
 
     while sidebar_visible(driver):
         question = get_question(driver)
-
-        if question is None:
-            logger.info("No question found.")
-            break
-
-        print("\nQuestion :", question)
-
+        options = get_options(driver)
+        # Try local knowledge (Rule Engine + Semantic Search)
         answer = get_answer(question)
 
-        if answer is None:
-            logger.info("No answer found in knowledge base. Trying LLM...")
+        if answer:
+            logger.info(f"Local Answer : {answer}")
 
-            options = get_options(driver)
+        else:
+            logger.info("No local answer found. Trying LLM...")
 
             try:
-                # Pass extracted options to the LLM so it chooses from them directly
                 answer = ask_llm(question, options=options)
 
                 logger.info(f"LLM Answer : {answer}")
+
+                # Save new question only if LLM was used
+                add_to_history(question, answer)
 
             except Exception as exc:
                 logger.exception(exc)
@@ -210,7 +288,7 @@ def answer_sidebar(driver, wait):
 
         add_to_history(question, answer)
 
-        question_type = detect_question_type(driver)
+        question_type = detect_question_type(driver, question)
 
         logger.info(f"Question Type : {question_type}")
 
@@ -273,23 +351,46 @@ def answer_sidebar(driver, wait):
             logger.info(f"Dropdown Selected : {answer}")
 
         # ===========================
+        # DATE OF BIRTH
+        # ===========================
+        elif question_type == "dob":
+            if not fill_dob_answer(driver, wait, answer):
+                logger.warning("DOB fields could not be filled.")
+                save_missing_question(question)
+                break
+
+            logger.info(f"Entered DOB : {answer}")
+
+        # ===========================
         # TEXTBOX
         # ===========================
         elif question_type == "text":
-            textbox = wait.until(
-                EC.visibility_of_element_located(
-                    (
-                        By.CSS_SELECTOR,
-                        "div.textArea[contenteditable='true']:not(.d-none)",
+            textbox = None
+            for selector in [
+                "div.textArea[contenteditable='true']:not(.d-none)",
+                "textarea",
+                "input[type='text']",
+                "input[type='date']",
+                "input[type='email']",
+                "input:not([type])",
+            ]:
+                try:
+                    textbox = wait.until(
+                        EC.visibility_of_element_located((By.CSS_SELECTOR, selector))
                     )
-                )
-            )
+                    if textbox.is_displayed() and textbox.is_enabled():
+                        break
+                except TimeoutException:
+                    continue
+                except Exception:
+                    continue
 
-            textbox.click()
+            if textbox is None:
+                logger.warning("No visible text input found for the question.")
+                save_missing_question(question)
+                break
 
-            textbox.clear()
-
-            textbox.send_keys(str(answer))
+            fill_text_answer(driver, textbox, answer)
 
             logger.info(f"Entered text : {answer}")
 
