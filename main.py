@@ -30,8 +30,8 @@ def main():
     except Exception as exc:
         logger.exception("Automation failed: %s", exc)
     finally:
-        # if driver:
-        #     driver.quit()
+        if driver:
+            driver.quit()
         time.sleep(50)
         logger.info("========== Automation Finished ==========")
 
