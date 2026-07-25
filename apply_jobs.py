@@ -136,8 +136,8 @@ def apply_jobs(driver, wait):
     else:
         logger.info("Application Submitted Successfully")
 
-    if selected >= max_jobs:
-        switch_to_profile_tab(driver, wait)
+    # if selected >= max_jobs:
+    #     switch_to_profile_tab(driver, wait)
 
     logger.info("Automation completed.")
 

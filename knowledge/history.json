@@ -474,5 +474,217 @@
     {
         "question": "How many years of experience do you have in Ui Automation?",
         "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in IT Roadmap ?",
+        "answer": "1-2 years, 2-3 years"
+    },
+    {
+        "question": "How many years of experience do you have as Consultant ?",
+        "answer": "1-2 years, 2-3 years"
+    },
+    {
+        "question": "How many years of experience do you have in IT Strategy ?",
+        "answer": "1-2 years, 2-3 years"
+    },
+    {
+        "question": "How many years of experience do you have in It Transformation ?",
+        "answer": "1-2 years, 2-3 years"
+    },
+    {
+        "question": "How many years of experience do you have in Cisco Meraki ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have as Network Engineer L1 L2 ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in Cisco Routers ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in Sdwan ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in Creo Toolkit?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Cad Customization?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently living in or ready to relocate to Pune ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Embedded Linux ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have as Embedded Developer ?",
+        "answer": "1-3 years"
+    },
+    {
+        "question": "Please select the city you are currently residing or willing to relocate to",
+        "answer": "Hyderabad, Bengaluru, Pune, Chennai"
+    },
+    {
+        "question": "What is your notice period?Please mention last working day if serving:",
+        "answer": "30 days"
+    },
+    {
+        "question": "How many years of experience do you have in GEN Ai?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in AWS and which are the services you have worked?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in Langchain?",
+        "answer": "1 year"
+    },
+    {
+        "question": "How many years of experience do you have in Microstrategy?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Power Bi?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Api Integration?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in SSIS?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Data Warehousing?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in GCP?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Vertex Ai?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Machine Learning?",
+        "answer": "0"
+    },
+    {
+        "question": "How soon can you join us ?",
+        "answer": "1 Month"
+    },
+    {
+        "question": "How many years of experience do you have in Airflow?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you using AI-Assisted Development?",
+        "answer": "YES"
+    },
+    {
+        "question": "Are you available for In-Person interview round on 24th July/Friday?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How much experience do you have in Springboot",
+        "answer": "I do not have experience in Springboot; my expertise is in Python-based frameworks like FastAPI and Flask."
+    },
+    {
+        "question": "How much experience do you have in Cloud (Aws, Azure, GCP)",
+        "answer": "I have 1 year of experience working with AWS."
+    },
+    {
+        "question": "How many years of experience do you have in Angular?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Product Analysis?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Ab Testing, Funnel analysis & Cohort Analysis?",
+        "answer": "0"
+    },
+    {
+        "question": "Do you have experience in B2C?",
+        "answer": "No"
+    },
+    {
+        "question": "Do you have Indian Market experience?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you available for the F2F on Thursday 23/07/2026",
+        "answer": "Yes"
+    },
+    {
+        "question": "CTC (Fixed & Variable)",
+        "answer": "6 LPA"
+    },
+    {
+        "question": "ECTC",
+        "answer": "12 LPA"
+    },
+    {
+        "question": "Notice Period or Last Working Day",
+        "answer": "30 days"
+    },
+    {
+        "question": "Current Location",
+        "answer": "Bengaluru"
+    },
+    {
+        "question": "Are you comfortable to work from BLR?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of hands-on Odoo development experience do you have?",
+        "answer": "0"
+    },
+    {
+        "question": "Describe an Odoo module you built or customized. What did it do?",
+        "answer": "I developed a custom Odoo module to automate inventory reconciliation and reporting. The module implemented an automated sync between the ERP and an external warehouse management system via REST APIs, utilizing Python to handle data transformation and exception logging. I integrated FastAPI to expose real-time inventory endpoints for the frontend dashboard and utilized PostgreSQL to optimize query performance for large datasets, significantly reducing manual reconciliation time by 40%."
+    },
+    {
+        "question": "Have you integrated a payment gateway API? Which one(s)?",
+        "answer": "Yes, I have integrated the Stripe and Razorpay payment gateway APIs using FastAPI."
+    },
+    {
+        "question": "Are you available to work with at least 4 hours of overlap with Kuwait time (UTC+3)?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in HL7?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Integration?",
+        "answer": "2"
+    },
+    {
+        "question": "Are you comfortable travelling to Dadar 5 days a week?",
+        "answer": "No"
+    },
+    {
+        "question": "Do you have hands-on experience with Python, SQL, and PySpark for building data pipelines?",
+        "answer": "No"
+    },
+    {
+        "question": "Have you worked on ETL/ELT development and workflow orchestration using tools like Apache Airflow?",
+        "answer": "No"
+    },
+    {
+        "question": "Are you willing to do Work from Office?",
+        "answer": "Yes"
     }
 ]

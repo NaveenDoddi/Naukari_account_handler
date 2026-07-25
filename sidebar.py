@@ -74,6 +74,77 @@ def _normalize_choice(text):
     return text.strip().lower()
 
 
+def normalize_text(value):
+
+    return (
+        str(value).lower().strip().replace(".", "").replace("-", " ").replace("_", " ")
+    )
+
+
+def resolve_answer(answer, question_type, options):
+    """
+    Converts a stored/local answer into something usable
+    by the CURRENT Naukri input control.
+
+    Returns None if it cannot safely resolve the answer.
+    """
+
+    if answer is None:
+        return None
+
+    # ==========================================
+    # TEXT
+    # ==========================================
+    if question_type == "text":
+        return str(answer).strip()
+
+    # No options means we cannot validate
+    if not options:
+        return answer
+
+    # ==========================================
+    # CHECKBOX
+    # ==========================================
+    if question_type == "checkbox":
+        if isinstance(answer, list):
+            answers = answer
+        else:
+            answers = [x.strip() for x in str(answer).split(",") if x.strip()]
+
+        resolved = []
+
+        for value in answers:
+            for option in options:
+                if value.lower() == option.lower():
+                    resolved.append(option)
+                    break
+
+        return resolved if resolved else None
+
+    # ==========================================
+    # RADIO / DROPDOWN
+    # ==========================================
+    if question_type in ("radio", "dropdown"):
+        answer_text = str(answer).strip()
+
+        # FIRST: exact case-insensitive match
+        for option in options:
+            if answer_text.lower() == option.lower():
+                return option
+
+        # SECOND: normalized match
+        normalized_answer = normalize_text(answer_text)
+
+        for option in options:
+            if normalized_answer == normalize_text(option):
+                return option
+
+        # Nothing reliable found
+        return None
+
+    return None
+
+
 def get_question(driver):
     """
     Returns the latest actual question from the chatbot.
@@ -283,14 +354,30 @@ def answer_sidebar(driver, wait):
 
     while sidebar_visible(driver):
         question = get_question(driver)
+
+        if question is None:
+            logger.info("No question found.")
+            break
+
+        print("\nQuestion :", question)
+
+        # 1. Detect CURRENT input type
+        question_type = detect_question_type(driver)
+
+        # 2. Get CURRENT options
         options = get_options(driver)
-        # Try local knowledge (Rule Engine + Semantic Search)
+
+        logger.info(f"Question Type : {question_type}")
+        logger.info(f"Available Options : {options}")
+
+        # 3. Try local knowledge
         answer = get_answer(question)
 
-        if answer:
+        if answer is not None:
             logger.info(f"Local Answer : {answer}")
 
         else:
+            # 4. Only use LLM when local answer doesn't exist
             logger.info("No local answer found. Trying LLM...")
 
             try:
@@ -298,148 +385,150 @@ def answer_sidebar(driver, wait):
 
                 logger.info(f"LLM Answer : {answer}")
 
-                # Save new question only if LLM was used
                 add_to_history(question, answer)
 
             except Exception as exc:
                 logger.exception(exc)
-
                 save_missing_question(question)
-
                 break
 
-        add_to_history(question, answer)
+        # =========================================
+        # 5. RESOLVE ANSWER FOR CURRENT INPUT TYPE
+        # ADD THE CODE HERE
+        # =========================================
 
-        question_type = detect_question_type(driver, question)
+        original_answer = answer
 
-        logger.info(f"Question Type : {question_type}")
+        resolved_answer = resolve_answer(answer, question_type, options)
 
-        # ===========================
-        # CHECKBOX
-        # ===========================
+        # Local answer exists but doesn't match
+        # the current radio/dropdown/checkbox options
+        if resolved_answer is None:
+            logger.warning(
+                f"Local answer '{original_answer}' "
+                f"does not match current options: {options}"
+            )
+
+            logger.info("Trying LLM to select from current options...")
+
+            try:
+                resolved_answer = ask_llm(question, options=options)
+
+                logger.info(f"LLM option answer : {resolved_answer}")
+
+                # Validate LLM answer also
+                resolved_answer = resolve_answer(
+                    resolved_answer, question_type, options
+                )
+
+            except Exception as exc:
+                logger.exception(exc)
+                save_missing_question(question)
+                break
+
+        # Still invalid?
+        if resolved_answer is None:
+            logger.error("Could not resolve a valid answer.")
+
+            save_missing_question(question)
+            break
+
+        # From here onwards use resolved_answer
+        answer = resolved_answer
+
+        # =========================================
+        # 6. HANDLE CHECKBOX
+        # =========================================
+
         if question_type == "checkbox":
             if isinstance(answer, str):
-                # Allow the LLM to return multiple choices separated by commas
-                if "," in answer:
-                    answer = [a.strip() for a in answer.split(",") if a.strip()]
-                else:
-                    answer = [answer]
+                answer = [answer]
 
             for value in answer:
                 logger.info(f"Selecting checkbox : {value}")
 
-                checkbox = None
+                normalized_target = normalize_text(value)
+                found = False
 
-                # Try exact-match XPath first (fastest)
+                # Try exact label match first (original behavior)
                 try:
                     checkbox = wait.until(
                         EC.element_to_be_clickable(
                             (By.XPATH, f"//label[normalize-space()='{value}']")
                         )
                     )
+                    safe_click(driver, checkbox)
+                    found = True
                 except Exception:
-                    # Fallback: scan all labels and match text more leniently
-                    labels = driver.find_elements(By.TAG_NAME, "label")
-                    for lab in labels:
-                        try:
-                            text = lab.text.strip()
-                        except Exception:
-                            continue
+                    # Fallback: iterate all labels and find a normalized match
+                    try:
+                        labels = driver.find_elements(By.CSS_SELECTOR, "label")
+                        for lbl in labels:
+                            try:
+                                text = lbl.text or ""
+                                if not text.strip():
+                                    continue
 
-                        if not text:
-                            continue
+                                # Exact normalized match or choice-range match
+                                if normalize_text(text) == normalized_target or (
+                                    _normalize_choice(text) == _normalize_choice(value)
+                                ):
+                                    safe_click(driver, lbl)
+                                    found = True
+                                    break
 
-                        # Normalize numeric ranges (e.g. '2-4 years' -> '2-4')
-                        lab_norm = _normalize_choice(text)
-                        val_norm = _normalize_choice(value)
+                                # Partial containment (e.g., '2-4 years' vs '2-4')
+                                if normalized_target in normalize_text(text):
+                                    safe_click(driver, lbl)
+                                    found = True
+                                    break
+                            except Exception:
+                                continue
+                    except Exception:
+                        pass
 
-                        if (
-                            text == value
-                            or text.lower() == value.lower()
-                            or value.lower() in text.lower()
-                            or lab_norm == val_norm
-                            or lab_norm in val_norm
-                            or val_norm in lab_norm
-                        ):
-                            checkbox = lab
-                            break
+                # Try input element fallback if label matching failed
+                if not found:
+                    try:
+                        input_el = driver.find_element(
+                            By.XPATH,
+                            (
+                                "//input[@type='checkbox' and (normalize-space(@value)=\""
+                                + value
+                                + "\" or contains(translate(@value,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),\""
+                                + value.lower()
+                                + '"))]'
+                            ),
+                        )
+                        safe_click(driver, input_el)
+                        found = True
+                    except Exception:
+                        pass
 
-                if checkbox is None:
-                    logger.warning(f"Could not find checkbox for value: {value}")
-                    continue
+                if not found:
+                    logger.warning(f"Could not find checkbox for '{value}'")
+                    save_missing_question(question)
+                    break
 
-                # If label contains an <input>, prefer clicking the input element
-                try:
-                    input_el = checkbox.find_element(By.TAG_NAME, "input")
-                except Exception:
-                    input_el = None
+        # =========================================
+        # 7. HANDLE RADIO
+        # =========================================
 
-                target = input_el if input_el is not None else checkbox
-
-                driver.execute_script(
-                    "arguments[0].scrollIntoView({block:'center'});", target
-                )
-
-                safe_click(driver, target)
-
-        # ===========================
-        # RADIO BUTTON
-        # ===========================
         elif question_type == "radio":
             logger.info(f"Selecting radio : {answer}")
 
-            radio = None
-
-            try:
-                radio = wait.until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, f"//label[normalize-space()='{answer}']")
-                    )
+            radio = wait.until(
+                EC.element_to_be_clickable(
+                    (By.XPATH, f"//label[normalize-space()='{answer}']")
                 )
-            except Exception:
-                labels = driver.find_elements(By.TAG_NAME, "label")
-                for lab in labels:
-                    try:
-                        text = lab.text.strip()
-                    except Exception:
-                        continue
+            )
 
-                    if not text:
-                        continue
+            safe_click(driver, radio)
 
-                    lab_norm = _normalize_choice(text)
-                    ans_norm = _normalize_choice(answer)
+        # =========================================
+        # 8. HANDLE DROPDOWN
+        # =========================================
 
-                    if (
-                        text == answer
-                        or text.lower() == answer.lower()
-                        or answer.lower() in text.lower()
-                        or lab_norm == ans_norm
-                        or lab_norm in ans_norm
-                        or ans_norm in lab_norm
-                    ):
-                        radio = lab
-                        break
-
-            if radio is None:
-                logger.warning(f"Could not find radio option for value: {answer}")
-            else:
-                try:
-                    input_el = radio.find_element(By.TAG_NAME, "input")
-                except Exception:
-                    input_el = None
-
-                target = input_el if input_el is not None else radio
-
-                driver.execute_script(
-                    "arguments[0].scrollIntoView({block:'center'});", target
-                )
-
-                safe_click(driver, target)
-
-        # ===========================
-        # DROPDOWN
-        # ===========================
         elif question_type == "dropdown":
             from selenium.webdriver.support.ui import Select
 
@@ -449,77 +538,35 @@ def answer_sidebar(driver, wait):
 
             Select(dropdown).select_by_visible_text(answer)
 
-            logger.info(f"Dropdown Selected : {answer}")
+        # =========================================
+        # 9. HANDLE TEXT
+        # =========================================
 
-        # ===========================
-        # DATE OF BIRTH
-        # ===========================
-        elif question_type == "dob":
-            if not fill_dob_answer(driver, wait, answer):
-                logger.warning("DOB fields could not be filled.")
-                save_missing_question(question)
-                break
-
-            logger.info(f"Entered DOB : {answer}")
-
-        # ===========================
-        # TEXTBOX
-        # ===========================
         elif question_type == "text":
-            textbox = None
-            for selector in [
-                "div.textArea[contenteditable='true']:not(.d-none)",
-                "textarea",
-                "input[type='text']",
-                "input[type='date']",
-                "input[type='email']",
-                "input:not([type])",
-            ]:
-                try:
-                    textbox = wait.until(
-                        EC.visibility_of_element_located((By.CSS_SELECTOR, selector))
-                    )
-                    if textbox.is_displayed() and textbox.is_enabled():
-                        break
-                except TimeoutException:
-                    continue
-                except Exception:
-                    continue
+            textbox = wait.until(
+                EC.visibility_of_element_located(
+                    (By.CSS_SELECTOR, "div.textArea[contenteditable='true']")
+                )
+            )
 
-            if textbox is None:
-                logger.warning("No visible text input found for the question.")
-                save_missing_question(question)
-                break
+            textbox.click()
 
-            fill_text_answer(driver, textbox, answer)
+            textbox.send_keys(str(answer))
 
             logger.info(f"Entered text : {answer}")
 
-        # ===========================
-        # UNKNOWN
-        # ===========================
         else:
-            logger.warning("Unknown question type.")
+            logger.warning(f"Unknown question type: {question_type}")
 
             save_missing_question(question)
-
             break
 
-        if not click_save(driver, wait):
-            logger.info(
-                "Save button was not found after answering. Checking sidebar state."
-            )
-            time.sleep(2)
-            if sidebar_visible(driver):
-                logger.warning(
-                    "Sidebar still visible but no save action available. Ending sidebar flow."
-                )
-            break
-
-        time.sleep(2)
+        # =========================================
+        # 10. SAVE ANSWER
+        # =========================================
 
         if not click_save(driver, wait):
-            logger.info("Final save/submit button was not found. Ending sidebar flow.")
+            logger.warning("Could not click Save.")
             break
 
         time.sleep(2)
