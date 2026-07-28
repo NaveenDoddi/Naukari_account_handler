@@ -1,7 +1,9 @@
 import os
+import tempfile
 from datetime import datetime
+from pathlib import Path
 
-from login import get_driver, login_user, is_login_page
+from login import get_driver, login_user
 import config
 from logger import logger
 from utils import take_screenshot
@@ -12,6 +14,16 @@ import time
 
 
 DAILY_MARKER_PATH = os.path.join("logs", "resume_update_marker.txt")
+
+
+def get_fresh_driver(headless=False):
+    profile_dir = Path(
+        tempfile.mkdtemp(prefix="naukri_resume_", dir=tempfile.gettempdir())
+    )
+    os.environ["CHROME_USER_DATA_DIR"] = str(profile_dir)
+    os.environ["CHROME_PROFILE_DIR"] = "Default"
+    logger.info("Using fresh browser profile for resume update run.")
+    return get_driver(headless)
 
 
 def should_update_resume_today():
@@ -38,27 +50,24 @@ def main():
     driver = None
 
     try:
-        driver = get_driver(config.HEADLESS)
+        driver = get_fresh_driver(config.HEADLESS)
 
         wait = WebDriverWait(driver, 20)
 
         logger.info("Browser launched successfully.")
 
-        if not should_update_resume_today():
-            logger.info("Resume update already done today. Skipping.")
-            return
+        # if not should_update_resume_today():
+        #     logger.info("Resume update already done today. Skipping.")
+        #     return
 
         def ensure_profile_page():
+            logger.info("Forcing sign-in with the latest saved credentials.")
+            driver.delete_all_cookies()
+            driver.get("https://www.naukri.com/nlogin/login")
+            time.sleep(3)
+            login_user(driver, wait, config.EMAIL, config.PASSWORD)
             driver.get("https://www.naukri.com/mnjuser/profile")
             time.sleep(5)
-
-            if is_login_page(driver, wait):
-                logger.info("User not logged in; performing login.")
-                login_user(driver, wait, config.EMAIL, config.PASSWORD)
-                driver.get("https://www.naukri.com/mnjuser/profile")
-                time.sleep(5)
-            else:
-                logger.info("Already logged in; now on profile page.")
 
         ensure_profile_page()
 

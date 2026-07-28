@@ -686,5 +686,201 @@
     {
         "question": "Are you willing to do Work from Office?",
         "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Ml Deployment?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have in Ml Pipelines?",
+        "answer": "0 years"
+    },
+    {
+        "question": "How many years of experience do you have in Speech to text?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Statistical Modeling?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you currently residing in Bengaluru and Which area in bangalore? and Are you interested for Whitefield?",
+        "answer": "Yes, I am currently residing in Bengaluru, specifically in [Insert Area Name]. Yes, I am interested in working in Whitefield."
+    },
+    {
+        "question": "How many years of experience in ASR?",
+        "answer": "0"
+    },
+    {
+        "question": "Which Education Stream?",
+        "answer": "Information Technology"
+    },
+    {
+        "question": "How Many Years of work experience do you have in your chosen engineering field",
+        "answer": "2-4"
+    },
+    {
+        "question": "What area have you most experience in?",
+        "answer": "Testing"
+    },
+    {
+        "question": "What other areas have you previous employment experience in?",
+        "answer": "AI/ML, Database, Testing"
+    },
+    {
+        "question": "How many years of experience do you have in Spark?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you comfortable with hybrid (3 days work from office)?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Analytics?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience in Tableau",
+        "answer": "0"
+    },
+    {
+        "question": "Do you have any experience in BFSI",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience do you have in Azure Foundry?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Conversational Ai?",
+        "answer": "1"
+    },
+    {
+        "question": "Have you developed and deployed chatbots in your current role?",
+        "answer": "Yes, I have developed and deployed chatbots using Python, FastAPI, LangChain, and OpenAI, integrated with vector databases like MongoDB to implement RAG workflows."
+    },
+    {
+        "question": "Are you currently residing in Mumbai ?",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience you have in Business Analyst",
+        "answer": "0"
+    },
+    {
+        "question": "Have you completed Engineering / MBA degree from a Tier-1 institution",
+        "answer": "no"
+    },
+    {
+        "question": "Based on your experience, which role are you confident interviewing for?",
+        "answer": "Gen AI Engineer (2 5 Years)"
+    },
+    {
+        "question": "Explain one Generative AI project that you have worked on. What was your role and what technologies did you use?",
+        "answer": "I developed an RAG-based document assistant designed to query unstructured data from internal PDF reports. My role involved building the pipeline to extract and chunk text, generating embeddings, and storing them in MongoDB. I utilized LangChain for orchestration, OpenAI’s GPT models for reasoning, and FastAPI to serve the application, significantly improving information retrieval efficiency."
+    },
+    {
+        "question": "What is RAG (Retrieval-Augmented Generation), and how have you implemented it in your project?",
+        "answer": "RAG (Retrieval-Augmented Generation) is an AI framework that improves LLM responses by retrieving relevant data from an external knowledge base before generating an answer. I implemented it by using LangChain to orchestrate the pipeline, where I embedded documents into a MongoDB vector store for efficient retrieval. When a user queries, the system fetches the most relevant context chunks and passes them to an OpenAI model, ensuring the generated response is accurate, context-aware, and grounded in specific project data."
+    },
+    {
+        "question": "How do you improve the accuracy of an AI application and reduce hallucinations?",
+        "answer": "To improve accuracy and reduce hallucinations in AI applications, I implement Retrieval-Augmented Generation (RAG) to ground responses in verified, domain-specific data. I refine this by optimizing prompt engineering with clear instructions, implementing few-shot prompting, and using temperature control to restrict creative variance. Additionally, I utilize vector database filtering for high-quality retrieval, incorporate external knowledge verification, and apply iterative testing with RAG evaluation frameworks like Ragas or TruLens to monitor faithfulness and relevance metrics."
+    },
+    {
+        "question": "Have you worked with AI Agents or MCP (Model Context Protocol)? Can you explain where you used them?",
+        "answer": "Yes, I have worked with AI Agents using LangChain and OpenAI to build retrieval-augmented generation (RAG) systems. I utilized these tools to develop intelligent agents that process specific datasets, allowing for contextual query resolution and automated data interaction. While I have primarily focused on implementing agentic workflows for automation and data retrieval, I am actively exploring the Model Context Protocol (MCP) to standardize how these agents interact with external data sources and development tools."
+    },
+    {
+        "question": "What challenges did you face while developing your Gen AI application, and how did you resolve them?",
+        "answer": "During the development of my Gen AI application, I encountered significant challenges with data retrieval accuracy and response latency. To address RAG performance, I implemented hybrid search combining semantic vector search with keyword matching to improve context relevance. For latency, I optimized the document chunking strategy and utilized LangChain's asynchronous execution features to process concurrent API calls more efficiently. Additionally, I resolved issues with model hallucinations by refining system prompts and implementing a robust validation layer to verify model output against retrieved document sources."
+    },
+    {
+        "question": "What is your Academics Score in Percentage?",
+        "answer": "75%"
+    },
+    {
+        "question": "How many years of experience do you have in Docker?",
+        "answer": "1"
+    },
+    {
+        "question": "What is your current CTC in Lacs per annum?",
+        "answer": "6"
+    },
+    {
+        "question": "How many years of experience do you have in Web Scraping?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Snowflake?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Snowpipe?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Streams?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Tasks?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of experience do you have in Azure Data Factory?",
+        "answer": "0"
+    },
+    {
+        "question": "Rate yourself in SQL out of 5",
+        "answer": "4/5"
+    },
+    {
+        "question": "Rate yourself in Excel out of 5",
+        "answer": "4"
+    },
+    {
+        "question": "Do you have experience in retail?",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience do you have in Pyspark?",
+        "answer": "0"
+    },
+    {
+        "question": "Current CTC",
+        "answer": "300000 - 800000"
+    },
+    {
+        "question": "Would need a work permit to work in location of application?",
+        "answer": "No"
+    },
+    {
+        "question": "Have you previously worked with us?",
+        "answer": "None"
+    },
+    {
+        "question": "Are you authorized to work permanently in location in which you are expressing an interest?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Middle Name",
+        "answer": "None"
+    },
+    {
+        "question": "Employee Code in case they have worked in the past",
+        "answer": "NA"
+    },
+    {
+        "question": "How many years of experience do you have in Motor Insurance?",
+        "answer": "0"
+    },
+    {
+        "question": "Are you comfortable attending one F2F final round in bangalore office? Its mandatory",
+        "answer": "Yes"
+    },
+    {
+        "question": "Are you good in C++ programming",
+        "answer": "No"
     }
 ]

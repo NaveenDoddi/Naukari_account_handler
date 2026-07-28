@@ -1,4 +1,7 @@
+import os
+import tempfile
 import time
+from pathlib import Path
 
 from selenium.webdriver.support.ui import WebDriverWait
 
@@ -6,6 +9,16 @@ from apply_jobs import apply_jobs
 from config import EMAIL, HEADLESS, PASSWORD, WAIT_TIME
 from logger import logger
 from login import get_driver, login_user, is_login_page
+
+
+def get_fresh_driver(headless=False):
+    profile_dir = Path(
+        tempfile.mkdtemp(prefix="naukri_main_", dir=tempfile.gettempdir())
+    )
+    os.environ["CHROME_USER_DATA_DIR"] = str(profile_dir)
+    os.environ["CHROME_PROFILE_DIR"] = "Default"
+    logger.info("Using fresh browser profile for main automation run.")
+    return get_driver(headless)
 
 
 def run_once(driver, wait):
@@ -17,16 +30,9 @@ def run_once(driver, wait):
     raise if recovery is impossible.
     """
     try:
+        logger.info("Using existing signed-in session.")
         driver.get("https://www.naukri.com/mnjuser/recommendedjobs")
         time.sleep(5)
-
-        # if is_login_page(driver, wait):
-        #     logger.info("User not logged in. Performing login...")
-        #     login_user(driver, wait, EMAIL, PASSWORD)
-        #     driver.get("https://www.naukri.com/mnjuser/recommendedjobs")
-        #     time.sleep(5)
-        # else:
-        #     logger.info("User already logged in. Continuing to recommended jobs...")
 
         apply_jobs(driver, wait)
         logger.info("Automation run completed.")
@@ -47,14 +53,28 @@ def run_once(driver, wait):
             raise
 
 
+def ensure_logged_in(driver, wait):
+    driver.get("https://www.naukri.com/mnjuser/recommendedjobs")
+    time.sleep(5)
+
+    if is_login_page(driver, wait):
+        logger.info("Session not signed in, performing login.")
+        login_user(driver, wait, EMAIL, PASSWORD)
+        driver.get("https://www.naukri.com/mnjuser/recommendedjobs")
+        time.sleep(5)
+    else:
+        logger.info("Already signed in, continuing automation.")
+
+
 def main(loop: bool = True, interval: int = 10):
     driver = None
     wait = None
 
     try:
         # Create a single browser instance and reuse across iterations
-        driver = get_driver(HEADLESS)
+        driver = get_fresh_driver(HEADLESS)
         wait = WebDriverWait(driver, WAIT_TIME)
+        ensure_logged_in(driver, wait)
 
         while True:
             try:
@@ -68,8 +88,9 @@ def main(loop: bool = True, interval: int = 10):
                     pass
 
                 logger.info("Recreating browser instance after failure...")
-                driver = get_driver(HEADLESS)
+                driver = get_fresh_driver(HEADLESS)
                 wait = WebDriverWait(driver, WAIT_TIME)
+                ensure_logged_in(driver, wait)
                 # Short pause before retrying
                 time.sleep(5)
                 continue

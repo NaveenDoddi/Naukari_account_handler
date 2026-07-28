@@ -37,3 +37,11 @@ How many years of experience do you have in Kafka?
 How many years of experience do you have in Debugging?
 How many years of experience do you have in Debugging?
 Are you available for a F2Finterview in Bangalore ?(Only Bangalore candidates are eligible to apply for this role)
+How many years of experience do you have in Ml Pipelines?
+What other areas have you previous employment experience in?
+What other areas have you previous employment experience in?
+What challenges did you face while developing your Gen AI application, and how did you resolve them?
+How many years of experience do you have in Python ?
+How many years of experience do you have in Python ?
+How many years of experience do you have in Python ?
+How many years of experience do you have in Python ?
