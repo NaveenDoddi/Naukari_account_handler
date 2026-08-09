@@ -21,54 +21,73 @@ def navigate_to_recommended_jobs_page(driver, wait):
 
 
 def switch_to_tab(driver, wait, tab_id):
-    logger.info(f"Switching to tab '{tab_id}'.")
-    selectors = [
-        f"div.tabs-container div.tab-wrapper#{tab_id}",
-        f"div.tabs-container div.tab-wrapper#{tab_id} div.tab-list-item",
-        f"div.tab-wrapper#{tab_id}",
-        f"div.tab-wrapper#{tab_id} div.tab-list-item",
-    ]
-
-    tab = None
-    for selector in selectors:
+    logger.info("Switching to tab '%s'.", tab_id)
+    selector = f"div.tab-wrapper#{tab_id} .tab-list-item"
+    try:
+        tab = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
+    except Exception:
         try:
-            tab = wait.until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, selector))
-            )
-            if tab is not None:
-                break
-        except TimeoutException:
-            continue
-
-    if tab is None:
-        logger.warning(
-            "Could not find tab element for '%s'. Skipping this tab.", tab_id
-        )
-        return False
+            tab = driver.find_element(By.CSS_SELECTOR, selector)
+        except Exception:
+            logger.warning("Could not find tab element for '%s'.", tab_id)
+            return False
 
     try:
         driver.execute_script("arguments[0].scrollIntoView(true);", tab)
-        time.sleep(0.5)
+        time.sleep(0.3)
         driver.execute_script("arguments[0].click();", tab)
     except Exception as exc:
-        logger.warning(
-            "JS click failed for tab '%s': %s. Trying native click.", tab_id, exc
-        )
+        logger.warning("Failed to click tab '%s': %s", tab_id, exc)
         try:
             tab.click()
         except Exception as exc2:
-            logger.warning(
-                "Native click also failed for tab '%s': %s. Skipping this tab.",
-                tab_id,
-                exc2,
-            )
+            logger.warning("Native click failed for tab '%s': %s", tab_id, exc2)
             return False
 
     time.sleep(2)
+    active_selector = f"div.tab-wrapper#{tab_id} .tab-list-item.tab-list-active"
+    active_tabs = driver.find_elements(By.CSS_SELECTOR, active_selector)
+    if not active_tabs:
+        logger.warning("Tab '%s' did not become active after click.", tab_id)
+        return False
+
     return True
 
 
-def apply_jobs_in_current_tab(driver, wait, max_jobs=10):
+def _find_job_click_target(container):
+    selectors = [
+        "label",
+        "input[type='checkbox']",
+        "button",
+        "[role='checkbox']",
+        "span",
+        "div",
+    ]
+
+    candidates = []
+    for selector in selectors:
+        try:
+            candidates.extend(container.find_elements(By.CSS_SELECTOR, selector))
+        except Exception:
+            continue
+
+    for candidate in candidates:
+        try:
+            if candidate.is_displayed() and candidate.is_enabled():
+                return candidate
+        except Exception:
+            continue
+
+    try:
+        if container.is_displayed() and container.is_enabled():
+            return container
+    except Exception:
+        pass
+
+    return candidates[0] if candidates else container
+
+
+def apply_jobs_in_current_tab(driver, wait, max_jobs=5):
     logger.info("Scanning current tab for jobs to apply.")
     time.sleep(2)
 
@@ -97,15 +116,23 @@ def apply_jobs_in_current_tab(driver, wait, max_jobs=10):
             )
             time.sleep(0.3)
 
-            if not checkbox.is_displayed():
+            click_target = _find_job_click_target(checkbox)
+            logger.info(
+                "Using click target %s for job checkbox.",
+                click_target.get_attribute("outerHTML")[:200]
+                if click_target is not None
+                else "<none>",
+            )
+
+            if not click_target.is_displayed():
                 logger.info("Checkbox not visible. Skipping.")
                 continue
 
-            if not checkbox.is_enabled():
+            if not click_target.is_enabled():
                 logger.info("Checkbox disabled. Skipping.")
                 continue
 
-            driver.execute_script("arguments[0].click();", checkbox)
+            driver.execute_script("arguments[0].click();", click_target)
             selected += 1
             logger.info(f"Selected Job {selected}")
             time.sleep(0.5)
@@ -138,12 +165,19 @@ def apply_jobs_in_current_tab(driver, wait, max_jobs=10):
 
     if sidebar_visible(driver):
         logger.info("Sidebar detected; answering required questions.")
-        answer_sidebar(driver, wait)
+        sidebar_success = answer_sidebar(driver, wait)
+        if not sidebar_success:
+            logger.warning("Sidebar interaction failed before completion.")
+            screenshot = take_screenshot(driver, f"sidebar_failed_{int(time.time())}")
+            logger.info(f"Failure screenshot saved : {screenshot}")
+        else:
+            logger.info("Sidebar interaction completed successfully.")
+            screenshot = take_screenshot(driver, f"completed_{int(time.time())}")
+            logger.info(f"Screenshot saved : {screenshot}")
     else:
         logger.info("Application submitted successfully.")
-
-    screenshot = take_screenshot(driver, f"completed_{int(time.time())}")
-    logger.info(f"Screenshot saved : {screenshot}")
+        screenshot = take_screenshot(driver, f"completed_{int(time.time())}")
+        logger.info(f"Screenshot saved : {screenshot}")
     return selected
 
 
@@ -153,45 +187,16 @@ def apply_jobs(driver, wait):
 
     navigate_to_recommended_jobs_page(driver, wait)
 
-    tab_sequence = [
-        ("apply", "Recommended"),
-        ("profile", "Profile"),
-        ("top_candidate", "Top Candidate"),
-        ("preference", "Preferences"),
-    ]
+    total_applied = apply_jobs_in_current_tab(driver, wait, max_jobs=5)
+    logger.info(f"Applied {total_applied} jobs on the current page.")
 
-    total_applied = 0
+    if switch_to_tab(driver, wait, "profile"):
+        logger.info("Switched to profile tab after apply phase.")
+        profile_applied = apply_jobs_in_current_tab(driver, wait, max_jobs=5)
+        total_applied += profile_applied
+        logger.info(f"Applied {profile_applied} jobs on the profile tab.")
+    else:
+        logger.warning("Could not switch to profile tab after apply phase.")
 
-    for tab_id, tab_name in tab_sequence:
-        if tab_id != "apply":
-            switched = switch_to_tab(driver, wait, tab_id)
-            if not switched:
-                logger.info(
-                    "Skipping tab '%s' because it could not be selected.", tab_name
-                )
-                continue
-
-        applied_in_tab = apply_jobs_in_current_tab(driver, wait, max_jobs=10)
-        total_applied += applied_in_tab
-
-        logger.info(f"Applied {applied_in_tab} jobs in '{tab_name}' tab.")
-
-        # If we applied any jobs, the site may navigate to a confirmation
-        # page. Ensure we return to the recommended jobs listing before
-        # continuing to the next tab so selectors remain consistent.
-        if applied_in_tab > 0:
-            logger.info("Returning to recommended jobs page after apply batch.")
-            try:
-                navigate_to_recommended_jobs_page(driver, wait)
-            except Exception:
-                logger.exception(
-                    "Failed to navigate back to recommended jobs page after applying."
-                )
-        if applied_in_tab < 10:
-            logger.info(
-                f"Fewer than 10 jobs were applied in '{tab_name}'. Moving to the next tab."
-            )
-
-    logger.info(f"Total applied jobs across tabs: {total_applied}")
     logger.info("Automation completed.")
     return total_applied > 0

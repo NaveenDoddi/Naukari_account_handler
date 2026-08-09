@@ -46,6 +46,62 @@ IGNORE_MESSAGES = [
 ]
 
 
+def is_resume_upload_prompt(question, driver):
+    if not question:
+        return False
+
+    normalized = normalize_text(question)
+    keywords = [
+        "upload resume",
+        "upload cv",
+        "attach resume",
+        "attach cv",
+        "upload your resume",
+        "upload your cv",
+        "attach your resume",
+        "attach your cv",
+        "resume upload",
+        "cv upload",
+        "please upload",
+        "please attach",
+        "add your resume",
+        "add your cv",
+        "upload document",
+        "attach document",
+        "share your resume",
+        "share your cv",
+    ]
+
+    return any(keyword in normalized for keyword in keywords)
+
+
+def skip_current_question(driver, wait):
+    skip_xpaths = [
+        "//button[normalize-space()='Skip']",
+        "//button[normalize-space()='Later']",
+        "//button[normalize-space()='Not now']",
+        "//button[normalize-space()='Ignore']",
+        "//button[normalize-space()='Next']",
+        "//button[normalize-space()='Continue']",
+        "//button[normalize-space()='Submit']",
+        "//button[normalize-space()='Done']",
+    ]
+
+    for xpath in skip_xpaths:
+        try:
+            button = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            if button.is_displayed():
+                safe_click(driver, button)
+                time.sleep(2)
+                return True
+        except TimeoutException:
+            continue
+        except Exception:
+            continue
+
+    return click_save(driver, wait)
+
+
 def sidebar_visible(driver):
     return (
         len(driver.find_elements(By.CSS_SELECTOR, "div.chatbot_DrawerContentWrapper"))
@@ -176,10 +232,30 @@ def get_question(driver):
 def get_options(driver):
 
     # Checkbox options
-    labels = driver.find_elements(By.CSS_SELECTOR, "label.mcc__label")
+    labels = driver.find_elements(
+        By.CSS_SELECTOR,
+        "label.mcc__label, div.multicheckboxes-container label, div.multiselectcheckboxes label",
+    )
 
     if labels:
-        return [i.text.strip() for i in labels]
+        return [i.text.strip() for i in labels if i.text.strip()]
+
+    # Fallback to checkbox input values for multiselect controls
+    checkbox_inputs = driver.find_elements(
+        By.CSS_SELECTOR, "input[type='checkbox'][data-val='multiselect']"
+    )
+    if checkbox_inputs:
+        options = []
+        for checkbox in checkbox_inputs:
+            text = (
+                checkbox.get_attribute("value")
+                or checkbox.get_attribute("aria-label")
+                or ""
+            ).strip()
+            if text:
+                options.append(text)
+        if options:
+            return options
 
     # Radio options
     labels = driver.find_elements(By.CSS_SELECTOR, "label.ssrc__label")
@@ -258,7 +334,16 @@ def is_dob_question(question):
 def detect_question_type(driver, question=None):
 
     # Multi Checkbox
-    if driver.find_elements(By.CSS_SELECTOR, "div.multiselectcheckboxes"):
+    checkbox_selectors = [
+        "div.multiselectcheckboxes",
+        "div.multicheckboxes-container",
+        "div.multicheckboxes",
+        "input[type='checkbox'][data-val='multiselect']",
+    ]
+    if any(
+        driver.find_elements(By.CSS_SELECTOR, selector)
+        for selector in checkbox_selectors
+    ):
         return "checkbox"
 
     # Radio Button
@@ -350,16 +435,105 @@ def fill_dob_answer(driver, wait, answer):
         return False
 
 
+def find_checkbox_option_element(driver, value):
+    """Return the actual clickable checkbox element for a given option value."""
+    if not value:
+        return None
+
+    target_text = normalize_text(value)
+
+    try:
+        labels = driver.find_elements(By.CSS_SELECTOR, "label")
+    except Exception:
+        labels = []
+
+    def find_checkbox_by_id(checkbox_id):
+        try:
+            for checkbox in driver.find_elements(
+                By.CSS_SELECTOR, "input[type='checkbox']"
+            ):
+                if (checkbox.get_attribute("id") or "").strip() == checkbox_id:
+                    return checkbox
+        except Exception:
+            pass
+        return None
+
+    for label in labels:
+        try:
+            label_text = (label.text or "").strip()
+            if not label_text:
+                continue
+
+            if (
+                normalize_text(label_text) == target_text
+                or _normalize_choice(label_text) == _normalize_choice(value)
+                or target_text in normalize_text(label_text)
+                or normalize_text(label_text) in target_text
+            ):
+                try:
+                    label_for = (label.get_attribute("for") or "").strip()
+                    if label_for:
+                        checkbox = find_checkbox_by_id(label_for)
+                        if checkbox is not None:
+                            try:
+                                if checkbox.is_displayed() and checkbox.is_enabled():
+                                    return checkbox
+                            except Exception:
+                                pass
+                            return label
+                except Exception:
+                    pass
+
+                return label
+        except Exception:
+            continue
+
+    try:
+        for checkbox in driver.find_elements(By.CSS_SELECTOR, "input[type='checkbox']"):
+            try:
+                checkbox_value = (checkbox.get_attribute("value") or "").strip()
+                checkbox_text = (checkbox.get_attribute("aria-label") or "").strip()
+                if checkbox_value and (
+                    normalize_text(checkbox_value) == target_text
+                    or _normalize_choice(checkbox_value) == _normalize_choice(value)
+                ):
+                    return checkbox
+                if checkbox_text and (
+                    normalize_text(checkbox_text) == target_text
+                    or _normalize_choice(checkbox_text) == _normalize_choice(value)
+                ):
+                    return checkbox
+            except Exception:
+                continue
+    except Exception:
+        pass
+
+    return None
+
+
 def answer_sidebar(driver, wait):
+    success = True
 
     while sidebar_visible(driver):
         question = get_question(driver)
 
         if question is None:
             logger.info("No question found.")
+            success = False
             break
 
         print("\nQuestion :", question)
+
+        if is_resume_upload_prompt(question, driver):
+            logger.info("Detected resume upload prompt. Skipping this question.")
+            if not skip_current_question(driver, wait):
+                logger.warning(
+                    "Could not skip resume upload prompt. Sidebar cannot continue."
+                )
+                success = False
+                break
+            time.sleep(2)
+            continue
 
         # 1. Detect CURRENT input type
         question_type = detect_question_type(driver)
@@ -431,6 +605,7 @@ def answer_sidebar(driver, wait):
             logger.error("Could not resolve a valid answer.")
 
             save_missing_question(question)
+            success = False
             break
 
         # From here onwards use resolved_answer
@@ -447,67 +622,24 @@ def answer_sidebar(driver, wait):
             for value in answer:
                 logger.info(f"Selecting checkbox : {value}")
 
-                normalized_target = normalize_text(value)
                 found = False
 
-                # Try exact label match first (original behavior)
                 try:
-                    checkbox = wait.until(
-                        EC.element_to_be_clickable(
-                            (By.XPATH, f"//label[normalize-space()='{value}']")
-                        )
-                    )
+                    checkbox = find_checkbox_option_element(driver, value)
+                    if checkbox is None:
+                        raise LookupError(f"No checkbox matched {value}")
+
+                    try:
+                        wait.until(EC.element_to_be_clickable(checkbox))
+                    except Exception:
+                        pass
+
                     safe_click(driver, checkbox)
                     found = True
                 except Exception:
-                    # Fallback: iterate all labels and find a normalized match
-                    try:
-                        labels = driver.find_elements(By.CSS_SELECTOR, "label")
-                        for lbl in labels:
-                            try:
-                                text = lbl.text or ""
-                                if not text.strip():
-                                    continue
-
-                                # Exact normalized match or choice-range match
-                                if normalize_text(text) == normalized_target or (
-                                    _normalize_choice(text) == _normalize_choice(value)
-                                ):
-                                    safe_click(driver, lbl)
-                                    found = True
-                                    break
-
-                                # Partial containment (e.g., '2-4 years' vs '2-4')
-                                if normalized_target in normalize_text(text):
-                                    safe_click(driver, lbl)
-                                    found = True
-                                    break
-                            except Exception:
-                                continue
-                    except Exception:
-                        pass
-
-                # Try input element fallback if label matching failed
-                if not found:
-                    try:
-                        input_el = driver.find_element(
-                            By.XPATH,
-                            (
-                                "//input[@type='checkbox' and (normalize-space(@value)=\""
-                                + value
-                                + "\" or contains(translate(@value,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),\""
-                                + value.lower()
-                                + '"))]'
-                            ),
-                        )
-                        safe_click(driver, input_el)
-                        found = True
-                    except Exception:
-                        pass
-
-                if not found:
                     logger.warning(f"Could not find checkbox for '{value}'")
                     save_missing_question(question)
+                    success = False
                     break
 
         # =========================================
@@ -559,6 +691,7 @@ def answer_sidebar(driver, wait):
             logger.warning(f"Unknown question type: {question_type}")
 
             save_missing_question(question)
+            success = False
             break
 
         # =========================================
@@ -567,8 +700,14 @@ def answer_sidebar(driver, wait):
 
         if not click_save(driver, wait):
             logger.warning("Could not click Save.")
+            success = False
             break
 
         time.sleep(2)
 
-    logger.info("Sidebar Completed.")
+    if success:
+        logger.info("Sidebar Completed.")
+    else:
+        logger.warning("Sidebar did not complete successfully.")
+
+    return success

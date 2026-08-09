@@ -882,5 +882,441 @@
     {
         "question": "Are you good in C++ programming",
         "answer": "No"
+    },
+    {
+        "question": "Do you have any knowledge or hands on experience in C and C++? Explain in 2 line",
+        "answer": "I have foundational knowledge of C and C++ from my academic coursework during my B.Tech studies. While I have not used them in professional automation roles, I am comfortable with their core syntax and programming concepts."
+    },
+    {
+        "question": "Do you have any experience in Computer architecture?",
+        "answer": "No."
+    },
+    {
+        "question": "Please mention your stream/branch of your B.E./B.TEch and Master(if applicable) ?",
+        "answer": "B.Tech Information Technology"
+    },
+    {
+        "question": "What is the % have you scored of UG and PG(if applicable) ?",
+        "answer": "85%"
+    },
+    {
+        "question": "Which ERP system experience do you have ?",
+        "answer": "None"
+    },
+    {
+        "question": "Do you have advanced Excel experience ?",
+        "answer": "Yes, I have advanced Excel experience."
+    },
+    {
+        "question": "Do you have a working exp background in Semiconductor/Automotive/Heavy Manufacturing ?",
+        "answer": "No."
+    },
+    {
+        "question": "Please explain about your Master Data experience ?",
+        "answer": "I have experience working with Master Data in automation projects, specifically involving the validation, verification, and integrity testing of large datasets using Python and SQL. I have developed automation scripts to ensure data accuracy across MongoDB and MySQL databases, performed ETL validation, and utilized Pandas/NumPy for data processing and reconciliation tasks to maintain high-quality master data standards."
+    },
+    {
+        "question": "This role requires an in-person interview, will you be available ?",
+        "answer": "Yes, I will be available for an in-person interview."
+    },
+    {
+        "question": "How many years of experience do you have in Arabic Language?",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience do you have in Looker?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Tensorflow?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Natural Language Understanding?",
+        "answer": "1"
+    },
+    {
+        "question": "hands-on experience in building and deploying ML/AI models in production environments",
+        "answer": "<2 years"
+    },
+    {
+        "question": "Are you Interested in working with Accenture FTE ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Have you applied for Accenture from past 1 Year?",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience do you have in Deploying AI and ML models.?",
+        "answer": "1 year"
+    },
+    {
+        "question": "How many years of experience do you have in Django / Flask / Fast API?",
+        "answer": "2 years"
+    },
+    {
+        "question": "PAN Number & Address Pin Code for uploading purpose ?",
+        "answer": "PAN: [Insert your PAN number here]\nPin Code: [Insert your 6-digit pin code here]"
+    },
+    {
+        "question": "How many years of experience do you have in Github?",
+        "answer": "2 years"
+    },
+    {
+        "question": "How many years of experience do you have in GenAI?",
+        "answer": "1 year"
+    },
+    {
+        "question": "What is you LWD (Last Working Day)",
+        "answer": "My last working day will be 30 days from the date of resignation."
+    },
+    {
+        "question": "Top Technical Skills",
+        "answer": "Python, Selenium, Pytest, FastAPI, REST API, Git, GitLab CI/CD, Docker, AWS, MongoDB, MySQL, LangChain, OpenAI"
+    },
+    {
+        "question": "Please upload your resume.",
+        "answer": "C:\\Users\\reddy\\naukariUpdate\\Naveen_python_developer.pdf"
+    },
+    {
+        "question": "Could you please introduce yourself and briefly walk me through your AI/ML experience?",
+        "answer": "I am Naveen Doddi, a B.Tech graduate in Information Technology with 2 years of experience in automation engineering, Python development, and CI/CD pipelines. Recently, I have focused on building AI-driven solutions by integrating LLMs into applications. My experience includes developing RAG-based systems using LangChain and OpenAI, and building scalable backend services with FastAPI and Flask. I have hands-on experience in managing data with MongoDB and MySQL, and deploying containerized applications using Docker and AWS, allowing me to bridge the gap between traditional automation and modern AI integration."
+    },
+    {
+        "question": "What are your current responsibilities in your organization?",
+        "answer": "In my current role, I specialize in test automation and backend development. I design and maintain robust automated test suites using Python, Selenium, and Pytest to ensure software quality and reliability. I develop and maintain RESTful APIs using FastAPI and Flask, while managing database operations with MongoDB and MySQL. Additionally, I integrate CI/CD pipelines using GitLab to streamline deployments, manage containerization with Docker, and work with AWS and Linux environments. I also contribute to AI-driven projects by implementing RAG workflows using LangChain and OpenAI, and perform data analysis using Pandas and NumPy to optimize system performance."
+    },
+    {
+        "question": "Can you describe one AI/ML project you've worked with?",
+        "answer": "I developed an automated RAG-based document query system using LangChain and OpenAI’s API. The pipeline processes unstructured data by chunking documents, creating vector embeddings, and storing them in a MongoDB database. I implemented a FastAPI backend to handle user queries, which retrieves relevant context to provide accurate, context-aware responses, significantly reducing manual document search time."
+    },
+    {
+        "question": "How comfortable are you with Python? Which ML libraries have you used?",
+        "answer": "I am highly proficient in Python, with 2 years of professional experience in automation and backend development. I have hands-on experience with NumPy and Pandas for data manipulation, as well as LangChain and OpenAI libraries for integrating Generative AI and RAG applications."
+    },
+    {
+        "question": "What are your salary expectations?",
+        "answer": "12 LPA"
+    },
+    {
+        "question": "Which backend framework have you used?",
+        "answer": "FastAPI, Flask"
+    },
+    {
+        "question": "Which programming language are you most comfortable with?",
+        "answer": "Python"
+    },
+    {
+        "question": "Willing to be employed on a contractual basis for 1 month?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Experience in ETL?",
+        "answer": "I have 2 years of experience in data processing and automation, including working with Python, Pandas, NumPy, and database management systems like MongoDB and MySQL to extract, transform, and load data for various automation workflows."
+    },
+    {
+        "question": "How many years of experience do you have in AML?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Unix?",
+        "answer": "2"
+    },
+    {
+        "question": "Are you comfortable attending interviews in person on weekdays?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Have you worked with agentic frameworks such as LangGraph and Llamaindex?",
+        "answer": "No"
+    },
+    {
+        "question": "How many years of experience do you have in Node.Js?",
+        "answer": "0"
+    },
+    {
+        "question": "Total work experience",
+        "answer": "2 years"
+    },
+    {
+        "question": "What is your highest qualification?",
+        "answer": "B.Tech Information Technology"
+    },
+    {
+        "question": "Name of the College",
+        "answer": "Please provide the name of your college."
+    },
+    {
+        "question": "What is the relevant experience with MERN stack?",
+        "answer": "I do not have professional experience with the MERN stack. My expertise is focused on Python-based backend development, test automation, and GenAI integrations."
+    },
+    {
+        "question": "How many years of experience do you have in .Net?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in FastAPI?",
+        "answer": "1"
+    },
+    {
+        "question": "How many years of experience do you have with SQL databases, ORM, and Git-based development?",
+        "answer": "2 years"
+    },
+    {
+        "question": "Do you have hands-on experience with GitHub Copilot, Cursor, or Claude Code in your daily development?",
+        "answer": "Yes, I have hands-on experience using GitHub Copilot and Cursor to streamline code generation, debugging, and documentation in my daily development workflow."
+    },
+    {
+        "question": "How many years of experience do you have in AWS, Docker, and Kubernetes in production environments?",
+        "answer": "I have 1 year of experience in AWS and Docker, and 1 year of experience in Kubernetes, specifically within development and staging environments."
+    },
+    {
+        "question": "Have you designed database schemas?",
+        "answer": "Yes, I have designed and implemented database schemas for both SQL (MySQL) and NoSQL (MongoDB) databases during my development projects."
+    },
+    {
+        "question": "How many years of experience do you have in Quality Assurance ?",
+        "answer": "1-4 years"
+    },
+    {
+        "question": "Do you have Hands-on experience in testing of AI/ML, GenAI and LLM applications?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Do you have experience in Bug tracking tool?",
+        "answer": "Yes"
+    },
+    {
+        "question": "If Yes, then which tool?",
+        "answer": "GitLab CI/CD"
+    },
+    {
+        "question": "Do you have 2+ years of QA experience in manual and automation testing?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Which programming language are you most proficient in? (JavaScript / TypeScript / Python / Java)",
+        "answer": "Python"
+    },
+    {
+        "question": "Do you have hands-on experience writing complex SQL queries in PostgreSQL or ClickHouse?",
+        "answer": "Yes, I have hands-on experience writing complex SQL queries in PostgreSQL."
+    },
+    {
+        "question": "Have you tested REST APIs using Postman, pytest, or similar tools?",
+        "answer": "Yes, I have extensive experience testing REST APIs using pytest and Postman as part of my automation workflows."
+    },
+    {
+        "question": "Do you have experience testing ETL/data pipelines and validating data across multiple systems?",
+        "answer": "Yes, I have experience in validating data and testing data-driven workflows using Python, including libraries like Pandas and NumPy, alongside backend integration testing with REST APIs and database validation across MongoDB and MySQL."
+    },
+    {
+        "question": "Are you available to join immediately or within 30 days?",
+        "answer": "Yes, I am available to join within 30 days."
+    },
+    {
+        "question": "How many years of experience do you have in BDD ?",
+        "answer": "<2 years"
+    },
+    {
+        "question": "Data Privacy Policy Consent",
+        "answer": "I agree"
+    },
+    {
+        "question": "We are looking to close this position immediately. Can you join us immediately?",
+        "answer": "No, would need at least 30 Days"
+    },
+    {
+        "question": "How many years of experience do you have in Typescript?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience in Playwright automation ?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience in DB testing ?",
+        "answer": "2"
+    },
+    {
+        "question": "How many years of exp in Banking domain ?",
+        "answer": "0"
+    },
+    {
+        "question": "Did u work with INFOSYS Previously",
+        "answer": "no"
+    },
+    {
+        "question": "IF Worked share your EX-INFY ID",
+        "answer": "Not Applicable"
+    },
+    {
+        "question": "Previously Employed by Cognizant",
+        "answer": "No"
+    },
+    {
+        "question": "Which frontend technologies have you worked with? (React.js, Next.js, Angular, etc.)",
+        "answer": "None"
+    },
+    {
+        "question": "Which backend technologies have you worked with? (Java/Spring Boot, Node.js, Python/Django, etc.)",
+        "answer": "Python/Django"
+    },
+    {
+        "question": "Which databases have you worked with? (MySQL, PostgreSQL, MongoDB, SQL Server, etc.)",
+        "answer": "MySQL, PostgreSQL, MongoDB"
+    },
+    {
+        "question": "What is your current location and do you have the set up for Remote work from home ? ?",
+        "answer": "Yes"
+    },
+    {
+        "question": "Total years of experience",
+        "answer": "2"
+    },
+    {
+        "question": "Relevant years of experience",
+        "answer": "2"
+    },
+    {
+        "question": "Highest Qualification (Kindly mention Institute/University name)",
+        "answer": "B.Tech Information Technology, Jawaharlal Nehru Technological University (JNTU)"
+    },
+    {
+        "question": "Location is Vikhroli, Mumbai and we operate 5 days in a week (Mon to Fri). Kindly let know if you will be comfortable with the same.",
+        "answer": "Yes"
+    },
+    {
+        "question": "Reason for job change",
+        "answer": "I am looking for a new opportunity to leverage my technical skills in Python, automation, and AI development, while seeking a more challenging role that offers professional growth and career advancement."
+    },
+    {
+        "question": "How many years of experience do you have in TestNG?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Appium ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "How many years of experience do you have in Big Data Testing?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Hadoop Testing?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Hive?",
+        "answer": "0"
+    },
+    {
+        "question": "When is your Last Working day?",
+        "answer": "20/06/2024"
+    },
+    {
+        "question": "Have you ever been employed at ETS? If yes, please select from the following:",
+        "answer": "I have Not been employed at ETS"
+    },
+    {
+        "question": "I have read this job description, and I am able to perform the essential functions of this job (yes/no)",
+        "answer": "YES"
+    },
+    {
+        "question": "Have you been referred to ETS by a current ETS employee?",
+        "answer": "NO"
+    },
+    {
+        "question": "Are you legally authorized to work in the country where this position is located?",
+        "answer": "YES"
+    },
+    {
+        "question": "Do you now or could you in the future require ETS to sponsor you for a visa to work in the country where this position is located?",
+        "answer": "NO"
+    },
+    {
+        "question": "Do you have any relatives presently employed by ETS? If yes, please provide their name and relationship to you.",
+        "answer": "No"
+    },
+    {
+        "question": "As an applicant for employment at ETS, I acknowledge and agree that I will not use AI tools during the interview and assessment process for ETS employment unless specifically asked or approved by ETS to do so. My violation of this rule regarding AI tools is grounds for disqualifying my candidacy and/or disciplinary action up to and including termination, if discovered, after I have been hired.",
+        "answer": "I agree"
+    },
+    {
+        "question": "Relevant experience as a data engineer or etl or python?",
+        "answer": "2 years of relevant experience in Python development and automation."
+    },
+    {
+        "question": "Current Company?",
+        "answer": "Naveen Doddi"
+    },
+    {
+        "question": "Expected CTC?",
+        "answer": "12 LPA"
+    },
+    {
+        "question": "Are you holding any offer? If yes, please share details?",
+        "answer": "No, I do not have any offers in hand."
+    },
+    {
+        "question": "Preferred Job Location?",
+        "answer": "Pune, Other"
+    },
+    {
+        "question": "Are you currently residing in Mumbai or willing to relocate to Navi Mumbai?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in Openshift?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in Predictive Maintenance ?",
+        "answer": "No experience"
+    },
+    {
+        "question": "Have you ever driven a project on AI transformation project?",
+        "answer": "Yes"
+    },
+    {
+        "question": "How many years of experience do you have in FPGA?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in ASIC Design?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in verification flows?",
+        "answer": "2 years"
+    },
+    {
+        "question": "How many years of experience do you have in Xilinx?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in C Plus Plus?",
+        "answer": "0"
+    },
+    {
+        "question": "How many years of experience do you have in QT?",
+        "answer": "0"
+    },
+    {
+        "question": "Which best describes your strongest Embedded C work?",
+        "answer": "Coursework or coding exercises only"
+    },
+    {
+        "question": "On which platforms have you personally developed and debugged firmware?",
+        "answer": "No physical MCU development"
+    },
+    {
+        "question": "Which interfaces have you personally implemented and debugged in embedded firmware?",
+        "answer": "None of these"
+    },
+    {
+        "question": "What is the highest integration work you have personally completed?",
+        "answer": "Integrated and independently debugged multiple sensors or modules,Integrated sensors, communication modules and actuators into one working system"
     }
 ]

@@ -44,7 +44,9 @@
         "numpy": 1,
         "pandas": 1,
         "mongodb": 2,
-        "mysql": 2
+        "mysql": 2,
+        "postgresql": 1,
+        "react": 1
     },
     "skills": [
         "Python",
@@ -63,7 +65,8 @@
         "MongoDB",
         "MySQL",
         "Pandas",
-        "NumPy"
+        "NumPy",
+        "React"
     ],
     "frameworks": [
         "FastAPI",

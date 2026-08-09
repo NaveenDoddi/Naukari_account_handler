@@ -45,3 +45,45 @@ How many years of experience do you have in Python ?
 How many years of experience do you have in Python ?
 How many years of experience do you have in Python ?
 How many years of experience do you have in Python ?
+Date of Birth
+Date of Birth
+Date of Birth
+Please upload your resume.
+Please upload your resume.
+Please upload your resume.
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Please select the city you are currently residing or willing to relocate to
+Data Privacy Policy Consent
+We are looking to close this position immediately. Can you join us immediately?
+We are looking to close this position immediately. Can you join us immediately?
+We are looking to close this position immediately. Can you join us immediately?
+Did u work with INFOSYS Previously
+Which frontend technologies have you worked with? (React.js, Next.js, Angular, etc.)
+Which databases have you worked with? (MySQL, PostgreSQL, MongoDB, SQL Server, etc.)
+Which databases have you worked with? (MySQL, PostgreSQL, MongoDB, SQL Server, etc.)
+As an applicant for employment at ETS, I acknowledge and agree that I will not use AI tools during the interview and assessment process for ETS employment unless specifically asked or approved by ETS to do so. My violation of this rule regarding AI tools is grounds for disqualifying my candidacy and/or disciplinary action up to and including termination, if discovered, after I have been hired.
+What is the highest integration work you have personally completed?

@@ -9,6 +9,10 @@ from apply_jobs import apply_jobs
 from config import EMAIL, HEADLESS, PASSWORD, WAIT_TIME
 from logger import logger
 from login import get_driver, login_user, is_login_page
+from update_resume import (
+    should_update_resume_today,
+    update_resume as update_resume_profile,
+)
 
 
 def get_fresh_driver(headless=False):
@@ -33,6 +37,12 @@ def run_once(driver, wait):
         logger.info("Using existing signed-in session.")
         driver.get("https://www.naukri.com/mnjuser/recommendedjobs")
         time.sleep(5)
+
+        if should_update_resume_today():
+            logger.info("Running resume update before applying jobs.")
+            update_resume_profile(driver, wait)
+        else:
+            logger.info("Resume update already completed today; skipping.")
 
         apply_jobs(driver, wait)
         logger.info("Automation run completed.")

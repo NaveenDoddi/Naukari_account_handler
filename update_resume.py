@@ -44,21 +44,22 @@ def mark_resume_updated_today():
         handle.write(datetime.now().strftime("%Y-%m-%d"))
 
 
-def main():
-    logger.info("========== Automation Started ==========")
+def update_resume(driver=None, wait=None):
+    logger.info("========== Resume Update Started ==========")
 
-    driver = None
-
-    try:
+    should_quit_driver = driver is None
+    if driver is None:
         driver = get_fresh_driver(config.HEADLESS)
 
+    if wait is None:
         wait = WebDriverWait(driver, 20)
 
-        logger.info("Browser launched successfully.")
+    logger.info("Browser launched successfully.")
 
-        # if not should_update_resume_today():
-        #     logger.info("Resume update already done today. Skipping.")
-        #     return
+    try:
+        if not should_update_resume_today():
+            logger.info("Resume update already done today. Skipping.")
+            return False
 
         def ensure_profile_page():
             logger.info("Forcing sign-in with the latest saved credentials.")
@@ -80,15 +81,12 @@ def main():
         delete_button.click()
         time.sleep(2)
 
-        # print(driver.page_source)
-
         wait.until(
             EC.visibility_of_element_located(
                 (By.CSS_SELECTOR, "div.lightbox.model_open")
             )
         )
 
-        # Click Delete button
         delete_confirm_button = wait.until(
             EC.element_to_be_clickable(
                 (
@@ -106,27 +104,31 @@ def main():
 
         file_input.send_keys(str(config.RESUME_PATH))
         time.sleep(30)
-        # # -----------------------------------------------------
 
         mark_resume_updated_today()
-        logger.info("Automation steps completed successfully.")
+        logger.info("Resume update steps completed successfully.")
 
         screenshot = take_screenshot(driver, "completed")
         logger.info(f"Screenshot saved : {screenshot}")
+        return True
 
-    except Exception as e:
-        logger.exception("Automation failed.")
+    except Exception:
+        logger.exception("Resume update failed.")
 
         if driver:
             screenshot = take_screenshot(driver, "error")
             logger.error(f"Failure screenshot : {screenshot}")
+        return False
 
     finally:
-        if driver:
+        if should_quit_driver and driver:
             driver.quit()
+            logger.info("Browser closed.")
+            logger.info("========== Resume Update Finished ==========\n")
 
-        logger.info("Browser closed.")
-        logger.info("========== Automation Finished ==========\n")
+
+def main():
+    update_resume()
 
 
 if __name__ == "__main__":
